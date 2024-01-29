@@ -31,6 +31,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      UserMailer.account_acctivation(@user).deliver_now
       flash[:success] = "Wellcome to Blink Blink team"
       redirect_to user_url(@user)
     else

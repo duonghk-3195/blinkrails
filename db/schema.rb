@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_26_012118) do
+ActiveRecord::Schema.define(version: 2024_01_29_043640) do
 
   create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 2024_01_26_012118) do
     t.string "password"
     t.string "password_digest"
     t.string "remember_digest"
+    t.string "activation_digest"
+    t.boolean "activated", default: false
+    t.datetime "activated_at"
   end
 
 end
