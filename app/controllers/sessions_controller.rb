@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       log_in @user
       # binding.pry
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_to user_path(@user)
+      redirect_back_or user
     else
       flash.now[:danger] = "Email or password is incorrect"
       render :new
