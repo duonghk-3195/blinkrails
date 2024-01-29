@@ -67,3 +67,5 @@ gem 'will_paginate', '3.1.8'
 # gem 'bootstrap-will_paginate', '1.0.0' k dùng được 
 
 gem 'will_paginate-bootstrap4'
+
+gem "rails-i18n"
