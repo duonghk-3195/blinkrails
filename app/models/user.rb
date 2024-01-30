@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-    attr_accessor :remember_token
+    attr_accessor :remember_token, :activation_token
     has_many :post
 
     before_save :downcase_email
+    before_create :create_activate_digest
 
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     validates :name, presence: true, length: { minium: 5, maximum: 50}
@@ -12,7 +13,16 @@ class User < ApplicationRecord
     validates :email, presence: true, length: { minium: 20, maximum: 255, }, 
         format: {with: VALID_EMAIL_REGEX}, # check dinh dang email
         uniqueness: {case_sensitive: false} # thuoc tinh email la duy nhat, khi them opstion scope: :group_id thi co the check unique theo từng group
-    
+
+    def activate
+        update_attribute(:activated, true)
+        update_attribute(:activated_at, Time.zone.now)
+    end
+
+    def send_activation_email
+        UserMailer.account_activation(self).deliver_now
+    end
+        
     class << self
         def digest string
             cost = if ActiveModel::SecurePassword.min_cost
@@ -37,10 +47,11 @@ class User < ApplicationRecord
         update_attribute(:remember_digest, nil)
     end
 
-    def authenticated? remember_token
-        return false unless remember_token
+    def authenticated? attribute, token
+        digest = send("#{attribute}_digest")
+        return false if digest.nil?
 
-        BCrypt::Password.new(remember_digest).is_password? remember_token
+        BCrypt::Password.new(digest).is_password? token
     end
 
     private
@@ -51,6 +62,8 @@ class User < ApplicationRecord
 
     def create_activate_digest
         self.activation_token = User.new_token
-        self.activation_digest = User.digest(activation_token)
+        self.activation_digest = User.digest(self.activation_token)
     end
+
+    
 end

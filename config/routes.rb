@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   get '/help', to: 'static_pages#help'
   get '/signup', to: 'users#new'
+  get '/account_activation/:id/edit', to: 'account_activation#edit'
   resources :posts
   resources :users
-  resources :account_activations, only: [:edit]
+  # resources :account_activation, only: [:edit]
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
