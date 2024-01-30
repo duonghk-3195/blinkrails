@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :logged_in_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [:edit, :update, :index]
   before_action :correct_user, only: [:edit, :update]
 
   # GET /users or /users.json
@@ -31,8 +31,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      flash[:success] = "Wellcome to Blink Blink team"
-      redirect_to user_url(@user)
+      @user.send_activation_email
+      flash[:success] = "Please check your email to activate your account."
+      redirect_to login_url
     else
       render :new, status: :unprocessable_entity
     end
@@ -73,6 +74,7 @@ class UsersController < ApplicationController
 
     def logged_in_user
       unless logged_in?
+        store_location
         flash[:danger] = "You must be logged in to access this page"
         redirect_to login_url
       end
