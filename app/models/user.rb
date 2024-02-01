@@ -2,6 +2,12 @@ class User < ApplicationRecord
     attr_accessor :remember_token, :activation_token, :reset_token
     has_many :posts, dependent: :destroy
 
+    has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+    has_many :following, through: :active_relationships, source: :followed
+
+    has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+    has_many :followers, through: :passive_relationships, source: :follower
+
     before_save :downcase_email
     before_create :create_activate_digest
 
@@ -30,7 +36,26 @@ class User < ApplicationRecord
     def feed 
         Post.where(user_id: self.id)
     end
+
+    def follow other_user
+        following << other_user
+    end
+
+    def unfollow other_user
+        following.delete other_user
+    end
+
+    def following? other_user
+        following.include? other_user
+    end
         
+    def feed
+        # following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+        # Post.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+
+        part_of_feed = "relationships.follower_id = :id or posts.user_id = :id"
+        Post.joins(user: :followers).where(part_of_feed, {id: id})
+    end
     class << self
         def digest string
             cost = if ActiveModel::SecurePassword.min_cost
