@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :logged_in_user, only: [:edit, :update, :index]
+  before_action :logged_in_user, only: [:edit, :update, :index, :destroy]
   before_action :correct_user, only: [:edit, :update]
 
   # GET /users or /users.json
@@ -11,8 +11,9 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    @page = params[:page] || 1
     @user = User.find(params[:id])
-    # binding.pry
+    @post = @user.posts.paginate page: @page, per_page: 2
   end
 
   # GET /users/new
@@ -72,16 +73,21 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "You must be logged in to access this page"
-        redirect_to login_url
-      end
-    end
+    # def logged_in_user
+    #   unless logged_in?
+    #     store_location
+    #     flash[:danger] = "You must be logged in to access this page"
+    #     redirect_to login_url
+    #   end
+    # end
 
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
+
+    # def admin_user
+    #   redirect_to(root_url) unless current_user.admin?
+    # end
+
 end
