@@ -1,6 +1,6 @@
 class User < ApplicationRecord
     attr_accessor :remember_token, :activation_token, :reset_token
-    has_many :post
+    has_many :posts, dependent: :destroy
 
     before_save :downcase_email
     before_create :create_activate_digest
@@ -25,6 +25,10 @@ class User < ApplicationRecord
 
     def send_password_reset_email
         UserMailer.password_reset(self).deliver_now
+    end
+
+    def feed 
+        Post.where(user_id: self.id)
     end
         
     class << self
