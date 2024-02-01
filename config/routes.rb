@@ -8,10 +8,15 @@ Rails.application.routes.draw do
   get '/help', to: 'static_pages#help'
   get '/signup', to: 'users#new'
   get '/account_activation/:id/edit', to: 'account_activation#edit'
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :password_resets, only: [:new, :create, :edit, :update]
-  # resources :account_activation, only: [:edit]
+  resources :account_activation, only: [:edit]
   resources :posts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 
 
   get "/login", to: "sessions#new"
