@@ -68,4 +68,15 @@ gem 'will_paginate', '3.1.8'
 
 gem 'will_paginate-bootstrap4'
 
+
 gem "rails-i18n"
+
+# gui mail
+gem 'figaro'
+
+gem 'image_processing', '1.9.3'
+
+gem 'mini_magick', '4.9.5'
+
+gem 'active_storage_validations', '0.8.2'
+

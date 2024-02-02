@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :logged_in_user, only: %i[ create destroy ]
+  before_action :correct_user, only: %i[ destroy ]
 
   # GET /posts or /posts.json
   def index
@@ -21,16 +23,14 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
-
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    @post = current_user.posts.build(post_params)
+    @post.image.attach(params[:post][:image])
+    if @post.save
+        flash[:success] = 'Post was successfully created.'
+        redirect_to root_url
+    else
+      @feed_items = current_user.feed.paginate(page: params[:page], per_page: 2)
+      render 'static_pages/home'
     end
   end
 
@@ -50,11 +50,8 @@ class PostsController < ApplicationController
   # DELETE /posts/1 or /posts/1.json
   def destroy
     @post.destroy
-
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    flash[:success] = "Post deleted"
+    redirect_to request.referrer || root_url  # referrer la di ve dau? loi khi xoa bai cuoi cung trong 1 page
   end
 
   private
@@ -65,6 +62,12 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content, :user_id)
+      params.require(:post).permit(:title, :content, :image)
     end
+
+    def correct_user
+      @post = current_user.posts.find_by(id: params[:id])
+      redirect_to root_url if @post.nil?
+    end
+    
 end

@@ -18,6 +18,9 @@
     User.create!(name: name,
         email: email,
         password: password,
-        password_confirmation: password)
+        password_confirmation: password,
+        activated_at: Time.now,
+        activated: true
+    )
 
 end
