@@ -1,0 +1,8 @@
+ja:
+  layouts:
+    header:
+      log_in: "ログイン"
+
+  static_pages:
+    home:
+      wellcome: 'Blink Blink Appへようこそ！'
