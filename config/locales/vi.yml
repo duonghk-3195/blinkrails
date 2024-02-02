@@ -1,0 +1,8 @@
+vi:
+  layouts:
+    header:
+      log_in: "Đăng Nhập"
+
+  static_pages:
+    home:
+      wellcome: "Chào mừng bạn đến với Blink Blink App"
