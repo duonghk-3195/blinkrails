@@ -20,6 +20,8 @@ class User < ApplicationRecord
         format: {with: VALID_EMAIL_REGEX}, # check dinh dang email
         uniqueness: {case_sensitive: false} # thuoc tinh email la duy nhat, khi them opstion scope: :group_id thi co the check unique theo từng group
 
+    enum gender: [:women, :man]
+
     def activate
         update_attribute(:activated, true)
         update_attribute(:activated_at, Time.zone.now)
