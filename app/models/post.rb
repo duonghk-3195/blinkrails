@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
     belongs_to :user
     default_scope -> { order(created_at: :desc) }
-    validates :title, length: { maximum: 250 }
+    validates :title, presence: true, length: { maximum: 250 }
     validates :user_id, presence: true
     validates :content, presence: true, length: { maximum: 1000 }
     has_one_attached :image

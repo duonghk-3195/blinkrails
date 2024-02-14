@@ -16,8 +16,10 @@ class SessionsController < ApplicationController
         redirect_to login_url
       end
     else
-      flash.now[:danger] = "Email or password is incorrect"
-      render :new
+      # flash.now[:danger] = "Email or password is incorrect"
+
+      render json: {status: 4000, message: "Email or password is incorrect"}
+      # render :new
     end
   end
 
