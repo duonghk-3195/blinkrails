@@ -2,7 +2,26 @@ en:
   layouts:
     header:
       log_in: "Log in"
+      home: "Home"
+      help: "Help"
+      users: "Users"
+      account: "Account"
+      profile: "Profile"
+      setting: "Setting"
+      log_out: "Log out"
+    footer:
+      context1: "The"
+      context2: "Ruby on Rails Tutorial"
+      context3: "by"
+      context4: "Michael Hartl"
+      about: "About"
+      contact: "Contact"
+      news: "News"
 
   static_pages:
     home:
       wellcome: "Welcome to the Blink Blink App"
+      context1: "This is the homepage for the"
+      context2: "Ruby on Rails Tutorial"
+      context3: "sample application"
+      sign_up_button: "Sign up now!"
