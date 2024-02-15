@@ -76,6 +76,15 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  def search
+    @gender = params[:search][:gender] || 2
+    if @gender != 2
+      @users = User.where(gender: @gender).paginate page: @page, per_page: 2
+    else
+      @users = User.paginate page: @page, per_page: 2
+    end
+    render users_path @users
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
