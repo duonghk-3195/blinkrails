@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    
     attr_accessor :remember_token, :activation_token, :reset_token
     has_many :posts, dependent: :destroy
 
@@ -19,6 +20,15 @@ class User < ApplicationRecord
     validates :email, presence: true, length: { minium: 20, maximum: 255, }, 
         format: {with: VALID_EMAIL_REGEX}, # check dinh dang email
         uniqueness: {case_sensitive: false} # thuoc tinh email la duy nhat, khi them opstion scope: :group_id thi co the check unique theo từng group
+
+    
+    validate :admin_checkbox, on: :update
+    def admin_checkbox
+        # binding.pry
+        if current_user.id == self.id && current_user.is_admin && !self.is_admin
+            errors.add :is_admin, "admin can't update self role"
+        end
+    end
 
     def activate
         update_attribute(:activated, true)
