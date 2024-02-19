@@ -1,0 +1,10 @@
+<%= search_form_for @q do |f| %>
+
+  <%= f.label "name" %>
+  <%= f.search_field :name_cont %>
+
+  <%= f.label "gender" %>
+  <%= f.search_field :gender_eq %>
+
+  <%= f.submit %>
+<% end %>

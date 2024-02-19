@@ -22,6 +22,19 @@ class User < ApplicationRecord
 
     enum gender: [:women, :man]
 
+    # scope :search_user, lambda{|search|
+    #     search&.squish! if search
+    #     ransack(user_name_or_email_cont: search).result
+    # }
+
+    ransacker :gender, formatter: proc {|v| genders[v]} do |parent|
+        parent.table[:gender]
+      end
+
+    def self.ransackable_attributes(auth_object = nil)
+        ["activated", "activated_at", "created_at", "email", "gender", "id", "is_admin", "name", "updated_at"]
+      end
+
     def activate
         update_attribute(:activated, true)
         update_attribute(:activated_at, Time.zone.now)

@@ -6,19 +6,15 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @page = params[:page] || 1
-    binding.pry
-    # @users = User.paginate page: @page, per_page: 2
-    if params[:search].nil?
-      @gender = 2
-    else
-      @gender = params[:search][:gender] || 2
-    end
+    # binding.pry
 
-    if @gender != 2
-      @users = User.where(gender: @gender).paginate page: @page, per_page: 2
-    else
-      @users = User.paginate page: @page, per_page: 2
-    end
+    @q = User.ransack(params[:q])
+    @users = @q.result.paginate page: @page, per_page: 2
+  end
+
+  def search_params
+    return nil unless params[:user_list]
+    params.require(:user_list).permit :user_name_or_email
   end
 
   # GET /users/1 or /users/1.json

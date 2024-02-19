@@ -1,12 +1,7 @@
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
 
-<span>filter : </span>
-<%= form_for :search, url: {action: :index, controller: :users} do |f| %>
-  Gender: <%= f.select :gender, [["All", 2], ["Male", 0], ["Female", 1]] %><br />
-  <%= f.submit %>
-<% end %>
-
+ <%= render 'search_form_for' %>
 
 <ul class="users">
   <% @users.each do |user| %>
