@@ -25,8 +25,9 @@ class User < ApplicationRecord
     validate :admin_checkbox, on: :update
     def admin_checkbox
         # binding.pry
-        if current_user.id == self.id && current_user.is_admin && !self.is_admin
-            errors.add :is_admin, "admin can't update self role"
+        is_admin_email = self.email.include? "@sun-asterisk.com"
+        if self.is_admin && !is_admin_email
+            errors.add :is_admin, "this account can't update to admin"
         end
     end
 
