@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @page = params[:page] || 1
     # binding.pry
 
-    @q = User.ransack(params[:q])
+    @q = User.ransack(params[:q]) # thêm .try(:merge, m: 'or'). để chuyển điều kiện and -> or
     @users = @q.result.paginate page: @page, per_page: 2
   end
 
