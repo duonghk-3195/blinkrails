@@ -12,7 +12,7 @@ class User < ApplicationRecord
     before_create :create_activate_digest
 
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-    validates :name, presence: true, length: { minium: 5, maximum: 50}
+    validates :name, presence: true, length: { minimum: 5, maximum: 50}
     validates :password, presence: true, length: { minimum: 6 }, 
         if: :password # chi thay doi password khi co su thay doi
     has_secure_password # ho tro viec xu ly mat khau
