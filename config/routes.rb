@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     get '/help', to: 'static_pages#help'
     get '/signup', to: 'users#new'
     resources :posts
-    resources :users
+    resources :users do
+      member do
+        get :profile, to: "users#show"
+      end
+    end
 
     get "/login", to: "sessions#new"
     post "/login", to: "sessions#create"
