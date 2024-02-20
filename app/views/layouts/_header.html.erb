@@ -5,7 +5,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><%= link_to "Home", root_path %></li>
             <li><%= link_to "Help", help_path %></li>
-            <% if logged_in? %>
+            <% if signed_in? %>
                 <li><%= link_to "Users", users_path %></li>
                 <li class="dropdown">
                     <a class="btn btn-secondary dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -16,12 +16,12 @@
                         <li><%= link_to "Seting", edit_user_path(current_user) %></li>
                         <li class="divider"></li>
                         <li>
-                            <%= link_to "Log out", logout_path, method: :delete %>
+                            <%= link_to "Log out", signout_path, method: :delete %>
                         </li>
                     </ul>
                 </li>
             <% else %>
-                <li><%= link_to t(".log_in"), login_path %></li>
+                <li><%= link_to t(".log_in"), signin_path %></li>
             <% end %>
             <li><%= link_to "English", locale:"en" %></li>
             <li><%= link_to "Vietnamese", locale:"vi" %></li>
