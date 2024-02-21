@@ -1,8 +1,27 @@
 vi:
   layouts:
     header:
-      log_in: "Đăng Nhập"
+      log_in: "Đăng nhập"
+      home: "Trang chủ"
+      help: "Trợ giúp"
+      users: "Người dùng"
+      account: "Tài khoản"
+      profile: "Thông tin"
+      setting: "Cài đặt"
+      log_out: "Đăng xuất"
+    footer:
+      context1: ""
+      context2: "Hướng dẫn về Ruby on Rails"
+      context3: "của"
+      context4: "Michael Hartl"
+      about: "Về chúng tôi"
+      contact: "Liên hệ"
+      news: "Tin mới"
 
   static_pages:
     home:
-      wellcome: "Chào mừng bạn đến với Blink Blink App"
+      wellcome: "Chào mừng đến với Blink Blink App"
+      context1: "Đây là trang home page của "
+      context2: "Ruby on Rails Tutorial"
+      context3: ""
+      sign_up_button: "Đăng ký ngay"
