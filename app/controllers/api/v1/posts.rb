@@ -5,7 +5,7 @@ class Posts < Grape::API
     resource :posts do
         desc "Return list of recent posts"
         get do
-            Post.all
+            @post = Post.all
         end
     end
 end
