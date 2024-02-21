@@ -11,6 +11,11 @@ module Blink
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+    config.paths.add "app/api",  glob:  "**/*.rb"
+    config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+
+    config.autoload_paths << Rails.root.join('lib')
+   
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.available_locales = [:en, :vi, :ja]
     config.i18n.default_locale = :en

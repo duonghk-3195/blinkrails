@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   scope "(:locale)", locale: /en|vi|ja/ do
+    mount API::Base, at: '/'
     get 'password_resets/new'
     get 'password_resets/edit'
     get 'sessions/new'
