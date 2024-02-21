@@ -6,14 +6,15 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @page = params[:page] || 1
-    @users = User.paginate page: @page, per_page: 2
+    # @users = User.paginate page: @page, per_page: 
+    @pagy, @users = pagy(User.all, items: 4)
   end
 
   # GET /users/1 or /users/1.json
   def show
     @page = params[:page] || 1
     @user = User.find(params[:id])
-    @post = @user.posts.paginate page: @page, per_page: 2
+    @pagy, @post = pagy @user.posts
   end
 
   # GET /users/new
