@@ -2,7 +2,7 @@
  <h1>Log in</h1>
  <div class="row">
    <div class="col-md-6 col-md-offset-3">
-     <%= form_for :session, url: login_path do |f| %>
+     <%= form_for :session do |f| %>
      <%= f.label :email %>
      <%= f.email_field :email, class: "form-control" %>
      <%= f.label :password %>
@@ -14,8 +14,30 @@
         <span>Remember me</span>
     <% end %>
 
-     <%= f.submit "Log in", class: "btn btn-primary" %>
+     <%= f.submit "Log in" ,class: "btn btn-primary" %>
    <% end %>
    <p><%= t "new_user?" %><%= link_to t("sign_up_now!"), signup_path %></p>
  </div>
 </div>
+
+
+    <button onclick="onClickLogin()">Log in new</button>
+
+<script>
+    function onClickLogin(){
+        var url = "http://127.0.0.1:3000//api/v1/sessions/new"
+        fetch(url).then(function(response) {
+          console.log("OK! Server returns a response object:");
+          response.json().then(function(j) { 
+            console.log(j); 
+          })
+          .catch(function(e){
+            console.log(e);
+          });
+        }).catch(function(error)  {
+          console.log("Noooooo! Something error:");
+          // Network Error!
+          console.log(error);
+        });
+    }
+</script>
