@@ -3,10 +3,51 @@
 <h1>Update your profile</h1>
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
-        <%= render 'form' %>
+        <form name="user" action="JavaScript:onClickUpdate(user)">
+            <input type="hidden" name="id" value="<%= @user.id %>"  />
+            <label >Name:</label><input type="text" name="name" value="<%= @user.name %>" />
+            <label>Email:</label><input type="email" name="email" value="<%= @user.email %>" />
+            <label >Password:</label><input type="password" name="password" />
+            <label >Password Confirm:</label><input type="password" name="password_confirm" />
+            <input type="submit" value="Update" action="JavaScript:onClickUpdate()" />
+        </form>
         <div class="gravatar_edit">
             <%= gravatar_for @user %>
             <a href="https://gravatar.com/emails" target="_blank">Change</a>
         </div>
     </div>
 </div>
+
+ <script>
+    function onClickUpdate(user){
+        var url = "http://127.0.0.1:3000//api/v1/users/"+user.id.value+"/update"
+        var user = {
+                name: user.name.value,
+                email: user.email.value,
+                password: user.password.value,
+                password_confirmation: user.password_confirm.value
+        }
+        fetch(url, {
+            method: "PATCH",
+            body: JSON.stringify({
+                user: user
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then(function(response) {
+            if (response.status == 201) {
+                response.json().then(function(data) {
+                    window.location.href = "http://127.0.0.1:3000/users/"+data.id;
+                }).catch(function(e){
+                alert("Noooooo! Something error:")
+            });
+            } else if (response.status == 3000) {
+                alert("please check any fields")
+            }
+        }).catch(function(error)  {
+          alert("Noooooo! Something error:")
+        }); 
+    }
+</script> 
+
