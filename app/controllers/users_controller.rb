@@ -84,7 +84,11 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      if current_user.is_admin?
+        params.require(:user).permit(:name, :email, :password, :password_confirmation, :is_admin)
+      else
+        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      end
     end
 
     # def logged_in_user
@@ -97,11 +101,11 @@ class UsersController < ApplicationController
 
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      redirect_to user_path(@user) unless current_user?(@user) || current_user.is_admin?
     end
 
     # def admin_user
-    #   redirect_to(root_url) unless current_user.admin?
+    #   store_location unless current_user.admin?
     # end
 
 end

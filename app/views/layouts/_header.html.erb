@@ -3,20 +3,20 @@
         <%= link_to "Blink Blink", root_path, id: "logo" %>
         <nav>
           <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Home", root_path %></li>
-            <li><%= link_to "Help", help_path %></li>
+            <li><%= link_to t(".home"), root_path %></li>
+            <li><%= link_to t(".help"), help_path %></li>
             <% if logged_in? %>
-                <li><%= link_to "Users", users_path %></li>
+                <li><%= link_to t(".users"), users_path %></li>
                 <li class="dropdown">
                     <a class="btn btn-secondary dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
-                    Account <b class="caret"></b>
+                    <%= t(".account") %> <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><%= link_to "Profile", current_user %></li>
-                        <li><%= link_to "Seting", edit_user_path(current_user) %></li>
+                        <li><%= link_to t(".profile"), current_user %></li>
+                        <li><%= link_to t(".setting"), edit_user_path(current_user) %></li>
                         <li class="divider"></li>
                         <li>
-                            <%= link_to "Log out", logout_path, method: :delete %>
+                            <%= link_to t(".log_out"), logout_path, method: :delete %>
                         </li>
                     </ul>
                 </li>
@@ -24,8 +24,8 @@
                 <li><%= link_to t(".log_in"), login_path %></li>
             <% end %>
             <li><%= link_to "English", locale:"en" %></li>
-            <li><%= link_to "Vietnamese", locale:"vi" %></li>
-            <li><%= link_to "Japanese", locale:"ja" %></li>
+            <li><%= link_to "Tiếng Việt", locale:"vi" %></li>
+            <li><%= link_to "日本語", locale:"ja" %></li>
           </ul>
         </nav>
       </div>

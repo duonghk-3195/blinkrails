@@ -2,7 +2,26 @@ ja:
   layouts:
     header:
       log_in: "ログイン"
+      home: "ホーム"
+      help: "ヘルプ"
+      users: "ユーザ"
+      account: "アカウント"
+      profile: "プロファイル"
+      setting: "設定"
+      log_out: "ログアウト"
+    footer:
+      context1: "Michael Hartlの"
+      context2: "Ruby on Rails Tutorial"
+      context3: ""
+      context4: ""
+      about: "私たちについて"
+      contact: "連絡"
+      news: "ニュース"
 
   static_pages:
     home:
-      wellcome: 'Blink Blink Appへようこそ！'
+      wellcome: "Blink Blink Appへようこそ！！"
+      context1: "こちらは"
+      context2: "Ruby on Rails Tutorial"
+      context3: "アプリのホームページ"
+      sign_up_button: "新規登録!"
