@@ -21,14 +21,28 @@ class User < ApplicationRecord
         format: {with: VALID_EMAIL_REGEX}, # check dinh dang email
         uniqueness: {case_sensitive: false} # thuoc tinh email la duy nhat, khi them opstion scope: :group_id thi co the check unique theo từng group
 
-    
-    validate :admin_checkbox, on: :update
+  validate :admin_checkbox, on: :update
     def admin_checkbox
         # binding.pry
         is_admin_email = self.email.include? "@sun-asterisk.com"
         if self.is_admin && !is_admin_email
             errors.add :is_admin, "this account can't update to admin"
         end
+    end
+  
+    enum gender: [:women, :man]
+
+    # scope :search_user, lambda{|search|
+    #     search&.squish! if search
+    #     ransack(user_name_or_email_cont: search).result
+    # }
+
+    ransacker :gender, formatter: proc {|v| genders[v]} do |parent|
+        parent.table[:gender]
+      end
+
+    def self.ransackable_attributes(auth_object = nil)
+        ["activated", "activated_at", "created_at", "email", "gender", "id", "is_admin", "name", "updated_at"]
     end
 
     def activate
@@ -118,5 +132,4 @@ class User < ApplicationRecord
         self.activation_token = User.new_token
         self.activation_digest = User.digest(self.activation_token)
     end
-
 end

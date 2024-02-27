@@ -6,7 +6,15 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @page = params[:page] || 1
-    @users = User.paginate page: @page, per_page: 2
+    # binding.pry
+
+    @q = User.ransack(params[:q]) # thêm .try(:merge, m: 'or'). để chuyển điều kiện and -> or
+    @users = @q.result.paginate page: @page, per_page: 2
+  end
+
+  def search_params
+    return nil unless params[:user_list]
+    params.require(:user_list).permit :user_name_or_email
   end
 
   # GET /users/1 or /users/1.json
@@ -76,6 +84,15 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  def search
+    @gender = params[:search][:gender] || 2
+    if @gender != 2
+      @users = User.where(gender: @gender).paginate page: @page, per_page: 2
+    else
+      @users = User.paginate page: @page, per_page: 2
+    end
+    render users_path @users
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

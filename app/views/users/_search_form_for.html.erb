@@ -1,0 +1,13 @@
+<%= search_form_for @q do |f| %>
+
+  <%= f.label "name" %>
+  <%= f.search_field :name_cont %>
+
+  <%= f.label "gender" %>
+  <%= f.select :gender_eq, [['', ''], ['man', 'man'], ['women', 'women']] %>
+
+  <%= f.label "is_admin" %>
+  <%= f.select :is_admin_eq, [['', ''], ['yes', true], ['no', false]] %>
+
+  <%= f.submit %>
+<% end %>

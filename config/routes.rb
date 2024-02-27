@@ -12,7 +12,12 @@ Rails.application.routes.draw do
     resources :users do
       member do
         get :following, :followers
+        # post :search
       end
+      collection do 
+        post :search
+      end
+
     end
     resources :password_resets, only: [:new, :create, :edit, :update]
     resources :account_activation, only: [:edit]

@@ -1,13 +1,33 @@
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
-<ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= gravatar_for user, size: 50 %>
-      <%= link_to user.name, user %>
-    </li>
-  <% end %>
-</ul>
+
+ <%= render 'search_form_for' %>
+<table>
+  <thead >
+    <th>Avatar</th>
+    <th><%= sort_link(@q, :name) %></th>
+    <th>Gender</th>
+    <th>Is Admin</th>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td>
+        <%= gravatar_for user, size: 50 %>
+      </td>
+      <td>
+        <%= link_to user.name, user %>
+      </td>
+      <td>
+        <%= user.gender %>
+      </td>
+      <td>
+        <%= user.is_admin %>
+      </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <%= will_paginate @users %>
 <br>
 
