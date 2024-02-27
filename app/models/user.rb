@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    
     attr_accessor :remember_token, :activation_token, :reset_token
 
     devise :database_authenticatable, :registerable,
@@ -24,6 +25,16 @@ class User < ApplicationRecord
     validates :email, presence: true, length: { minium: 20, maximum: 255, }, 
         format: {with: VALID_EMAIL_REGEX}, # check dinh dang email
         uniqueness: {case_sensitive: false} # thuoc tinh email la duy nhat, khi them opstion scope: :group_id thi co the check unique theo từng group
+
+    
+    validate :admin_checkbox, on: :update
+    def admin_checkbox
+        # binding.pry
+        is_admin_email = self.email.include? "@sun-asterisk.com"
+        if self.is_admin && !is_admin_email
+            errors.add :is_admin, "this account can't update to admin"
+        end
+    end
 
     def activate
         update_attribute(:activated, true)
