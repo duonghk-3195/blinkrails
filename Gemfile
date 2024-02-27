@@ -80,3 +80,7 @@ gem 'mini_magick', '4.9.5'
 
 gem 'active_storage_validations', '0.8.2'
 
+gem 'grape'
+gem 'grape_on_rails_routes'
+gem 'grape-entity'
+gem 'jwt'

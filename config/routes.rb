@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   scope "(:locale)", locale: /en|vi|ja/ do
+    mount API::Base, at: '/'
     get 'password_resets/new'
     get 'password_resets/edit'
     get 'sessions/new'
@@ -18,7 +19,6 @@ Rails.application.routes.draw do
     resources :account_activation, only: [:edit]
     resources :posts, only: [:create, :destroy]
     resources :relationships, only: [:create, :destroy]
-
 
     get "/login", to: "sessions#new"
     post "/login", to: "sessions#create"
