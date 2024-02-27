@@ -1,4 +1,4 @@
 require "pagy/extras/bootstrap"
 require "pagy/extras/items"
 
-Pagy::VARS[:items] = 3
+Pagy::DEFAULT[:items] = 3
