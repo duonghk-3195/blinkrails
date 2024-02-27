@@ -8,17 +8,18 @@ Rails.application.routes.draw do
     root 'static_pages#home'
     get '/help', to: 'static_pages#help'
     get '/signup', to: 'users#new'
+    resources :posts
     get '/account_activation/:id/edit', to: 'account_activation#edit'
     resources :users do
       member do
         get :following, :followers
+        get :profile, to: "users#show"
       end
     end
     resources :password_resets, only: [:new, :create, :edit, :update]
     resources :account_activation, only: [:edit]
     resources :posts, only: [:create, :destroy]
     resources :relationships, only: [:create, :destroy]
-
 
     get "/login", to: "sessions#new"
     post "/login", to: "sessions#create"
