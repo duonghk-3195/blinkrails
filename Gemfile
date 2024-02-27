@@ -80,3 +80,4 @@ gem 'mini_magick', '4.9.5'
 
 gem 'active_storage_validations', '0.8.2'
 
+gem 'cancancan'

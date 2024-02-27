@@ -13,7 +13,7 @@
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation, class: 'form-control' %>
   
-  <% if !current_user.nil? && current_user.is_admin? %>
+  <% if can? :update_admin, current_user %>
     <%= f.label :is_admin, class: "checkbox inline" do %>
       <%= f.check_box :is_admin %>
       <span>admin</span>
